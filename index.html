@@ -48,16 +48,19 @@ ol{padding-left:20px;margin:8px 0 0}li{margin-bottom:6px}
     <dl>
       <dt>NIT</dt><dd id="nit"></dd>
       <dt>Anillo</dt><dd id="an"></dd>
-      <dt>Documentos</dt><dd>15 páginas en un solo PDF</dd>
+      <dt>Tu proveedor</dt><dd id="pv"></dd>
+      <dt>Tu cliente</dt><dd id="cl"></dd>
     </dl>
-    <a class="btn" id="d" href="#" download>Descargar mis documentos (PDF)</a>
+    <a class="btn" id="d" href="#" download>1. Descargar mis documentos (PDF)</a>
+    <a class="btn" id="dx" href="#" download>2. Descargar mi cuaderno de trabajo (Excel)</a>
   </section>
 
   <section class="card">
-    <strong>Qué hacer con los documentos</strong>
+    <strong>Qué hacer</strong>
     <ol>
-      <li>Lee primero la ficha de tu empresa (página 1).</li>
-      <li>Con los documentos de las páginas 2 a 15, registra los asientos de noviembre de 2026 en tu libro diario.</li>
+      <li>Lee primero la ficha de tu empresa (página 1 del PDF).</li>
+      <li>Abre el cuaderno de Excel: diligencia los formatos de compras y ventas con tu proveedor y tu cliente (hoja Agenda) y lleva el kardex.</li>
+      <li>Registra todos los asientos de noviembre de 2026 en la hoja Libro_Diario y revisa que los controles digan OK.</li>
       <li>Concilia tu cuenta de bancos con el extracto y ajusta el inventario con la toma física.</li>
     </ol>
     <p class="small" style="margin-bottom:0">Todos los datos son ficticios y sirven solo para practicar. No compartas tu código.</p>
@@ -81,8 +84,9 @@ $("f").addEventListener("submit", async e => {
     if (!res.ok) throw new Error("nf");
     const d = await res.json();
     $("n").textContent = d.n; $("a").textContent = d.act;
-    $("nit").textContent = d.nit; $("an").textContent = "Anillo " + d.anillo + " (empresas de tu grupo)";
+    $("nit").textContent = d.nit; $("pv").textContent = d.prov; $("cl").textContent = d.cli; $("an").textContent = "Anillo " + d.anillo + " (empresas de tu grupo)";
     const a = $("d"); a.href = "p/" + k + ".pdf"; a.setAttribute("download", d.f);
+    const x = $("dx"); x.href = "x/" + k + ".xlsx"; x.setAttribute("download", d.fx);
     $("r").hidden = false; $("r").scrollIntoView({behavior: "smooth", block: "nearest"});
   } catch (err) {
     $("m").textContent = "Código no válido. Revisa que esté igual al que te envió el profesor.";
